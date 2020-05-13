@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "input-output-app-c986f": {
+      "hosting": {
+        "inputOutputApp": [
+          "input-output-app-c986f"
+        ]
+      }
+    }
+  }
+}

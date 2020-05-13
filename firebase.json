@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "inputOutputApp",
+      "public": "dist/inputOutputApp",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
