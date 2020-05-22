@@ -14,7 +14,7 @@ export class InputOutputService {
 
   createInputOutput(inputOutput: InputOutputModel) {
     const uid = this.authSvc.user.uid;
-    console.log(uid);
+    // console.log(uid);
     return this.firestore.doc(`${uid}/inputs-outputs`)
       .collection('items')
       .add({ ...inputOutput });

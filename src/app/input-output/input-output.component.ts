@@ -38,7 +38,7 @@ export class InputOutputComponent implements OnInit, OnDestroy {
 
   saveInput() {
     if (this.inputForm.invalid) { return; }
-    console.log(this.inputForm.value);
+    // console.log(this.inputForm.value);
     this.store.dispatch(isLoading());
 
     const { description, amount } = this.inputForm.value;

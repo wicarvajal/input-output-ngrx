@@ -6,11 +6,9 @@ import * as inputOutput from './input-output/input-output.reducer';
 export interface AppState {
   ui: ui.State;
   auth: auth.State;
-  inputOutput: inputOutput.State;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
   ui: ui.uiReducer,
   auth: auth.authReducer,
-  inputOutput: inputOutput.inputOutputReducer
 };

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { InputOutputModel } from 'src/app/models/input-output.model';
 import { MultiDataSet, Label } from 'ng2-charts';
+import { AppStateWithInputs } from '../input-output.reducer';
 
 @Component({
   selector: 'app-statistics',
@@ -19,7 +20,7 @@ export class StatisticsComponent implements OnInit {
   public doughnutChartLabels: Label[] = ['Ingresos', 'Egresos'];
   public doughnutChartData: MultiDataSet = [[]];
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppStateWithInputs>) { }
 
   ngOnInit(): void {
     this.store.select('inputOutput')
