@@ -7,16 +7,16 @@
           Especifique el monto y el tipo
         </p>
 
-        <form>
+        <form [formGroup]="inputForm" (ngSubmit)="saveInput()">
 
           <div class="form-group">
             <label>Descripción</label>
-            <input type="text" class="form-control" placeholder="Descripción" name="descripcion">
+            <input type="text" class="form-control" placeholder="Descripción" formControlName="description">
           </div>
 
           <div class="form-group">
             <label>Monto</label>
-            <input type="number" class="form-control" placeholder="Monto" name="monto">
+            <input type="number" class="form-control" placeholder="Monto" formControlName="amount">
             <p>
               Debe de ser un monto positivo
             </p>
@@ -25,13 +25,16 @@
           <div class="form-group">
             <label>Tipo</label>
             <br>
-            <button type="button" class="btn btn-primary btn-block">Ingreso</button>
-            <!-- <button type="button" class="btn btn-warning btn-block">Egreso</button> -->
+            <button *ngIf="type === 'input'" (click)="type = 'output'" type="button"
+              class="btn btn-primary btn-block">Ingreso</button>
+            <button *ngIf="type === 'output'" (click)="type = 'input'" type="button"
+              class="btn btn-warning btn-block">Egreso</button>
           </div>
 
           <hr>
-          <button type="button" class="btn btn-success mr-2">
-            <i class="fa fa-save"></i>
+          <button type="submit" class="btn btn-success mr-2" [disabled]="inputForm.invalid || loading">
+            <i class="fa fa-save" *ngIf="!loading"></i>
+            <i class="fa fa-spin fa-sync" *ngIf="loading"></i>
             Agregar
           </button>
 

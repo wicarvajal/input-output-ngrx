@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { setUser, unsetUser } from '../auth/auth.actions';
 import { Subscription } from 'rxjs';
+import { unsetItems } from '../input-output/input-output.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,11 @@ import { Subscription } from 'rxjs';
 export class AuthService {
 
   userSubs: Subscription;
+  private _user: User;
+
+  get user() {
+    return this._user;
+  }
 
   constructor(private auth: AngularFireAuth,
               private firestore: AngularFirestore,
@@ -23,15 +29,18 @@ export class AuthService {
     this.auth.authState.subscribe(fUser => {
       if (fUser) {
         this.userSubs = this.firestore.doc(`${fUser.uid}/user`).valueChanges()
-        .subscribe((fStoreUser: any) => {
-          // Se debe desuscribir ya que si hay cambios en la bdd
-          // entra al subscribe y mantiene info incorrecta del usuario
-          const tempUser = User.fromFirebase(fStoreUser);
-          this.store.dispatch(setUser({user: tempUser}));
-        });
+          .subscribe((fStoreUser: any) => {
+            // Se debe desuscribir ya que si hay cambios en la bdd
+            // entra al subscribe y mantiene info incorrecta del usuario
+            const tempUser = User.fromFirebase(fStoreUser);
+            this._user = tempUser;
+            this.store.dispatch(setUser({ user: tempUser }));
+          });
       } else {
+        this._user = null;
         this.userSubs.unsubscribe();
         this.store.dispatch(unsetUser());
+        this.store.dispatch(unsetItems());
       }
     });
   }

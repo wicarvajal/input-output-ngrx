@@ -20,6 +20,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { StatisticsComponent } from './input-output/statistics/statistics.component';
 import { appReducers } from './app.reducer';
+import { OrderInputsPipe } from './pipes/order-inputs.pipe';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { appReducers } from './app.reducer';
     DetailComponent,
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    OrderInputsPipe
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { appReducers } from './app.reducer';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { InputOutputModel } from 'src/app/models/input-output.model';
+import { MultiDataSet, Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-statistics',
@@ -7,10 +11,40 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class StatisticsComponent implements OnInit {
+  inputs = 0;
+  outputs = 0;
+  totalInputs = 0;
+  totalOutputs = 0;
 
-  constructor() { }
+  public doughnutChartLabels: Label[] = ['Ingresos', 'Egresos'];
+  public doughnutChartData: MultiDataSet = [[]];
+
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.store.select('inputOutput')
+      .subscribe(({ items }) => {
+        this.generateStatistics(items);
+      });
+  }
+
+  generateStatistics(items: InputOutputModel[]) {
+    this.inputs = 0;
+    this.outputs = 0;
+    this.totalInputs = 0;
+    this.totalOutputs = 0;
+
+    for (const item of items) {
+      if (item.type === 'input') {
+        this.totalInputs += item.amount;
+        this.inputs++;
+      } else {
+        this.totalOutputs += item.amount;
+        this.outputs++;
+      }
+    }
+
+    this.doughnutChartData = [[this.totalInputs, this.totalOutputs]];
   }
 
 }
